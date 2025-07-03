@@ -14,3 +14,6 @@ node_modules
 
 # .DS_Store is only for Mac users
 **/.DS_Store
+
+#wk1 activity 2 - add readme file to .gitignore
+README.md
