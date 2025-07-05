@@ -190,7 +190,9 @@ main.home {
 
 footer {
   text-align: left;  
-  font-size: 20px;
+  font-size: 13px;
+  padding-top: 10px;
+  padding-bottom: 0; 
 }
 
 /* Desktop and large screens */
@@ -214,7 +216,8 @@ footer {
     background-color: #fff;
     border: 5px solid var(--important-text-color); 
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-    padding: 1rem;
+    padding: 10px;
+    padding-bottom: 0;
   }
 
   .hero {
