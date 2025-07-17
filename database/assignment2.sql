@@ -5,7 +5,7 @@ VALUES
 
 -- 2. Modify account Tony Sartk to "Admin"
 UPDATE account
-SET account_role = 'Admin'
+SET account_type = 'Admin'
 WHERE account_email = 'tony@starkent.com';
 
 -- 3 Delete the account of Tony Stark
