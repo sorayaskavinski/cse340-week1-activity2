@@ -32,12 +32,20 @@ a{
   text-decoration: none;
 }
 
-#tools{
+/*#tools{
   position: absolute;
   left: 75%;
   top: 5%;
+}*/
+
+nav{
+  position: relative;
+  z-index: 10;
 }
 
+#tools{
+  z-index: 1;
+}
 ul.nav {
   display: flex;
   justify-content: center;
