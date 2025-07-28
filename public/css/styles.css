@@ -215,6 +215,33 @@ footer {
   padding-bottom: 0; 
 }
 
+.vehicle-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  padding: 1rem;
+}
+
+.vehicle-image {
+  flex: 1 1 300px;
+}
+
+.vehicle-image img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.vehicle-info {
+  flex: 2 1 400px;
+}
+
+.price, .mileage {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #2d2d2d;
+}
+
 /* Desktop and large screens */
 @media screen and (min-width: 768px) {
   .nav {
@@ -267,5 +294,9 @@ footer {
   .reviews,
   .upgrades {
     flex: 1;    
+  }
+
+  .vehicle-container {
+    flex-direction: column;
   }
 }
