@@ -57,4 +57,35 @@ Util.buildClassificationGrid = async function(data){
   return grid
 }
 
+/* **************************************
+* Build the Detail view HTML
+* ************************************ */
+Util.buildVehicleDetail = async function(data){
+  let view = ''
+  if(data.length > 0){
+    data.forEach(vehicle => { 
+      view += '<section class="vehicle-container">'
+      view += `<div class="vehicle-image">
+        <img src="${vehicle.inv_image}" 
+             alt="Image of ${vehicle.inv_make} ${vehicle.inv_model} on CSE Motors" />
+      </div>`
+      view += `
+        <div class="vehicle-info">
+        <h2>${vehicle.inv_make} ${vehicle.inv_model}</h2>
+        <p class="price" style="background-color: rgba(231, 235, 241, 0.6); padding: 0.5rem;">
+          ${new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(vehicle.inv_price)}
+        </p>
+        <p class="mileage">Mileage: ${vehicle.inv_miles}</p>
+        <p>Color: ${vehicle.inv_color}</p>
+        <p>Description: ${vehicle.inv_description}</p>
+      </div>`
+      view += `</section><hr>`
+    })
+  } else {
+    view = '<p class="notice">Sorry, no vehicle details could be found.</p>'
+  }
+
+  return view
+}
+
 module.exports = Util

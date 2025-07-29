@@ -41,6 +41,6 @@ async function getInventoryById(inv_id) {
     console.error("getInventoryById error:", error)
   }
 }
-
+  
 module.exports = {getClassifications, getInventoryByClassificationId, getInventoryById};
 

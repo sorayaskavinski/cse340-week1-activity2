@@ -1,28 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title><%= vehicle.make %> <%= vehicle.model %></title>
-  <link rel="stylesheet" href="/css/styles.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<body>
-  <main class="vehicle-detail">
-    <h1><%= vehicle.make %> <%= vehicle.model %></h1>
+<% if (title) { %>
+  <h1><%= title %></h1>
+<% } else {
+  res.redirect('/')
+} %>
 
-    <section class="vehicle-container">
-      <div class="vehicle-image">
-        <img src="<%= vehicle.imagePath %>" alt="Image of <%= vehicle.make %> <%= vehicle.model %>">
-      </div>
-
-      <div class="vehicle-info">
-        <h2><%= vehicle.year %> <%= vehicle.make %> <%= vehicle.model %></h2>
-        <p class="price">Price: $<%= vehicle.price.toLocaleString('en-US') %></p>
-        <p class="mileage">Mileage: <%= vehicle.miles.toLocaleString('en-US') %> miles</p>
-        <p><strong>Color:</strong> <%= vehicle.color %></p>
-        <p><strong>Description:</strong> <%= vehicle.description %></p>
-      </div>
-    </section>
-  </main>
-</body>
-</html>
+<%- vehicleDetail %>

@@ -32,7 +32,7 @@ invCont.buildByClassificationId = async function (req, res, next) {
 /* ***************************
  *  Build vehicle detail view
  * ************************** */
-invCont.buildDetailView = async function (req, res, next) {
+invCont.buildVehicleDetail = async function (req, res, next) {
   const inv_id = req.params.inv_id
   const data = await invModel.getInventoryById(inv_id)
   const nav = await utilities.getNav()
@@ -46,10 +46,11 @@ invCont.buildDetailView = async function (req, res, next) {
     return
   }
 
+  const detailView = await utilities.buildVehicleDetail(data)
   res.render("./inventory/detail", {
-    title: `${data.make} ${data.model}`,
+    title: `${data.inv_make} ${data.inv_model}`,
     nav,
-    vehicle: data
+    deetailView,
   })
 }
 
