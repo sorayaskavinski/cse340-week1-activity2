@@ -32,6 +32,19 @@ app.get("/", baseController.buildHome)
 // Inventory Routes
 app.use("/inv", inventoryRoute)
 
+
+/* ***********************
+ * ERROR Handling middleware
+ *************************/
+app.use((err, req, res, next) => {
+  console.error(err.stack)
+  res.status(500).render("errors/500", {
+    title: "Server Error",
+    message: "Something went wrong on our end."
+  })
+})
+
+
 /* ***********************
  * Local Server Information
  * Values from .env (environment) file

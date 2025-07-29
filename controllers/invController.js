@@ -50,7 +50,7 @@ invCont.buildVehicleDetail = async function (req, res, next) {
   res.render("./inventory/detail", {
     title: `${data.inv_make} ${data.inv_model}`,
     nav,
-    deetailView,
+    vehicleDetail: detailView,
   })
 }
 
