@@ -20,6 +20,14 @@ app.set("view engine", "ejs")
 app.use(expressLayouts)
 app.set("layout", "layouts/layout") //not at views root
 
+
+app.use((req, res, next) => {
+  res.locals.year = new Date().getFullYear()
+  next()
+})
+
+
+
 /* ***********************
  * Routes
  *************************/
@@ -40,7 +48,8 @@ app.use((err, req, res, next) => {
   console.error(err.stack)
   res.status(500).render("errors/500", {
     title: "Server Error",
-    message: "Something went wrong on our end."
+    message: "Something went wrong on our end.",
+    year: res.locals.year
   })
 })
 
