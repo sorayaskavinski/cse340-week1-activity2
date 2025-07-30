@@ -25,6 +25,20 @@ async function checkRegData(req, res, next){
   next()
 }
 
+async function checkLoginData(req, res, next) {
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+        let nav = await utilities.getNav()
+        return res.status(400).render("account/login", {
+            errors: errors.array(),
+            title: "Login",
+            nav,
+            account_email: req.body.account_email,
+            account_password: req.body.account_password,
+        })
+    }
+}
+
 /* ROUTES*/
 router.get("/login", utilities.handleErrors(accountController.buildLogin))
 router.get("/register", utilities.handleErrors(accountController.buildRegister))
@@ -32,5 +46,8 @@ router.get("/register", utilities.handleErrors(accountController.buildRegister))
 /** ROUTER POST */
 router.post("/register", regValidate.registationRules(),
 checkRegData, utilities.handleErrors(accountController.registerAccount))
+
+router.post("/login", regValidate.loginRules(),
+checkLoginData, utilities.handleErrors(accountController.loginAccount))
 
 module.exports = router
