@@ -14,6 +14,7 @@ const baseController = require("./controllers/baseController")
 const inventoryRoute = require("./routes/inventoryRoute")
 const session = require("express-session")
 const pool = require("./database/")
+const bodyParser = require("body-parser")
 
 /* ***********************
  * Middleware
@@ -29,6 +30,8 @@ const pool = require("./database/")
   name: 'sessionId',
 }))
 
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
 // Express Messages Middleware
 app.use(require('connect-flash')())
 app.use(function(req, res, next){
@@ -62,9 +65,6 @@ app.get("/", baseController.buildHome)
 
 // Inventory Routes - unit 3 activity
 app.use("/inv", inventoryRoute)
-
-//Unit 4 - Middleware for reading the body of Register
-app.use(express.urlencoded({ extended: true }))
 
 //Account routes - unit 4 activity
 app.use("/account", require("./routes/accountRoute"))
