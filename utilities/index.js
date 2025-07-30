@@ -88,4 +88,11 @@ Util.buildVehicleDetail = async function(data){
   return view
 }
 
+/*Account Handle errors  - Unit 4   */
+Util.handleErrors = function (fn) {
+  return function (req, res, next) {
+    return fn(req, res, next).catch(next)
+  }
+}
+
 module.exports = Util
