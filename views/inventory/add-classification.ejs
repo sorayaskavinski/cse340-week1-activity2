@@ -1,0 +1,37 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+<%- include('../partials/navigation') %>
+
+<main>
+  <h1>Add Classification</h1>
+
+  <!-- Flash & error message -->
+  <% if (message) { %>
+    <div class="flash"><%= message %></div>
+  <% } %>
+  <% if (errors && errors.length > 0) { %>
+    <ul class="errors">
+      <% errors.forEach(error => { %>
+        <li><%= error.msg %></li>
+      <% }) %>
+    </ul>
+  <% } %>
+
+  <form action="/inv/add-classification" method="post" id="addClassificationForm">
+    <label for="classification_name">Classification Name</label>
+    <input
+      type="text"
+      id="classification_id"
+      name="classification_name"
+      pattern="^[A-Za-z0-9]+$"
+      title="No spaces or special characters allowed"
+      required
+    >
+    <button type="submit">Add Classification</button>
+  </form>
+</main>
+
+<%- include('../partials/footer') %>
+<script>
+  // Você pode adicionar validação adicional aqui se quiser
+</script>

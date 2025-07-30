@@ -1,5 +1,7 @@
 const pool = require("../database/")
 
+const invModel = {}
+
 /* ***************************
  *  Get all classification data
  * ************************** */
@@ -41,6 +43,31 @@ async function getInventoryById(inv_id) {
     console.error("getInventoryById error:", error)
   }
 }
-  
-module.exports = {getClassifications, getInventoryByClassificationId, getInventoryById};
 
+/* ***************************
+ * Assignment UNIT 4 ADD CLASSIFICATION
+ * ************************** */
+invModel.getClassifications = async function () {
+  try {
+    const data = await pool.query("SELECT * FROM classification ORDER BY classification_name")
+    return data.rows
+  } catch (error) {
+    throw new Error("Erro ao buscar classificações: " + error)
+  }
+}
+
+invModel.addClassification = async function (classification_name) {
+  try {
+    const sql = `INSERT INTO public.classification (classification_name) 
+                 VALUES ($1) RETURNING *`
+    const result = await pool.query(sql, [classification_name])
+    return result.rowsCount
+  } catch (error) {
+    console.error("Error adding classification:", error)
+    return null
+  }
+}
+
+
+
+module.exports = {getClassifications, getInventoryByClassificationId, getInventoryById};
