@@ -1,5 +1,6 @@
 const utilities = require("../utilities/")
 const accountModel = require("../models/accountModel")
+const bcrypt = require("bcryptjs")
 
 async function buildLogin(req, res) {
   let nav = await utilities.getNav()
@@ -39,7 +40,19 @@ async function buildRegister(req, res) {
 async function registerAccount(req, res) {
   let nav = await utilities.getNav()
   const { account_firstname, account_lastname, account_email, account_password } = req.body
-
+    // Hash the password before storing
+  let hashedPassword
+  try {
+    // regular password and cost (salt is generated automatically)
+    hashedPassword = await bcrypt.hashSync(account_password, 10)
+  } catch (error) {
+    req.flash("notice", 'Sorry, there was an error processing the registration.')
+    res.status(500).render("account/register", {
+      title: "Registration",
+      nav,
+      errors: null,
+    })
+  }
   const emailExists = await accountModel.getAccountByEmail(account_email)
   if (emailExists) {
     req.flash("notice", "Email already registered. Please log in or use another email.")
@@ -55,7 +68,7 @@ async function registerAccount(req, res) {
       account_firstname,
       account_lastname,
       account_email,
-      account_password
+      hashedPassword
     )
 
     req.flash(
