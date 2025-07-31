@@ -69,4 +69,24 @@ const validateInventory = [
   }
 ];
 
-module.exports = { validateInventory };
+const validateClassification = [
+  body("classification_name")
+    .trim()
+    .notEmpty()
+    .withMessage("Classification name is required.")
+    .isLength({ min: 3 })
+    .withMessage("Classification name must be at least 3 characters long.")
+    .matches(/^[a-zA-Z\s]*$/)
+    .withMessage("Classification name must contain only letters and spaces."),
+  
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      req.flash("error", errors.array().map(err => err.msg).join(" "));
+      return res.redirect("back");
+    }
+    next();
+  }
+];
+
+module.exports = { validateInventory, validateClassification };

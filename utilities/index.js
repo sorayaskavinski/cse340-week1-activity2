@@ -104,7 +104,7 @@ Util.buildClassificationList = async function (classification_id = null) {
   let classificationList =
     '<select name="classification_id" id="classificationList" required>'
   classificationList += "<option value=''>Choose a Classification</option>"
-  data.rows.forEach((row) => {
+  data.forEach((row) => {
     classificationList += '<option value="' + row.classification_id + '"'
     if (classification_id != null && row.classification_id == classification_id) {
       classificationList += " selected "

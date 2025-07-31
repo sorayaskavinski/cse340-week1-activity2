@@ -3,7 +3,7 @@ const router = express.Router()
 const invController = require("../controllers/invController")
 const utilities = require("../utilities/index")
 
-const{validateInventory} = require ("../utilities/inventory-validation")
+const{validateInventory, validateClassification} = require ("../utilities/inventory-validation")
 
 // Route to build inventory by classification view
 router.get("/type/:classification_id", invController.buildByClassificationId)
@@ -18,9 +18,10 @@ router.get("/error", (req, res, next) => {
 
 //ASSIGNMENT UNIT 4
 router.get("/", utilities.handleErrors(invController.getManagementView))
-router.get("/add-classification", invController.buildAddClassification)
-router.get("/add", invController.buildAddInventory)
+router.get("/add-classification", utilities.handleErrors(invController.buildAddClassification))
+router.get("/add-inventory",utilities.handleErrors(invController.buildAddInventory))
 
-router.post("/add-inventory", invController.insertInventory)
-router.post("/add-classification", invController.insertClassification)
+router.post("/add-inventory", validateInventory, utilities.handleErrors(invController.addInventory))
+router.post("/add-classification", validateClassification, utilities.handleErrors(invController.addClassification))
+
 module.exports = router
