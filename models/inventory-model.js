@@ -1,3 +1,4 @@
+const { addClassification, addInventory } = require("../controllers/invController")
 const pool = require("../database/")
 
 const invModel = {}
@@ -61,13 +62,38 @@ invModel.addClassification = async function (classification_name) {
     const sql = `INSERT INTO public.classification (classification_name) 
                  VALUES ($1) RETURNING *`
     const result = await pool.query(sql, [classification_name])
-    return result.rowsCount
+    return result.rowCount
   } catch (error) {
     console.error("Error adding classification:", error)
     return null
   }
 }
 
+invModel.addInventory = async function (invData) {
+  try {
+    const sql = `
+      INSERT INTO public.inventory 
+      (inv_make, inv_model, inv_year, inv_description, inv_price, inv_miles, inv_color, classification_id)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+      RETURNING *
+    `
+    const values = [
+      invData.inv_make,
+      invData.inv_model,
+      invData.inv_year,
+      invData.inv_description,
+      invData.inv_price,
+      invData.inv_miles,
+      invData.inv_color,
+      invData.classification_id,
+    ]
+    const result = await pool.query(sql, values)
+    return result.rowCount
+  } catch (error) {
+    console.error("Error adding inventory item:", error)
+    return null
+  }
+}
 
 
-module.exports = {getClassifications, getInventoryByClassificationId, getInventoryById};
+module.exports = {getClassifications, getInventoryByClassificationId, getInventoryById, addClassification, addInventory};

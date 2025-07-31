@@ -1,5 +1,5 @@
 const invModel = require("../models/inventory-model")
-const utilities = require("../utilities/")
+const utilities = require("../utilities")
 const invCont = {}
 
 /* ***************************
@@ -74,47 +74,76 @@ invCont.buildVehicleDetail = async function (req, res) {
 /* ***************************
  *  Assignment UNIT 4 Build Management View
  * ************************** */
-const buildManagement = async function (req, res){
-  const nav = await utilities.getNav()
+invCont.getManagementView = async function (req, res) {
+  const nav = await utilities.getNav(req, res)
   res.render("inventory/management", {
     title: "Inventory Management",
     nav,
-    message: req.flash("notice"),
+    errors: null,
+    message: req.flash("message")
   })
 }
 
 invCont.buildAddClassification = async function (req, res) {
+  try {
+    const nav = await utilities.getNav()
     res.render("inventory/add-classification", {
-    title: "Add Classification",
-    message: null,
-    errors: [],
-  })
+      title: "Add New Classification",
+      nav,
+      message: null,
+      errors: null,
+    })
+  } catch (error) {
+    throw new Error("Failed to build Add Classification view: " + error.message)
+  }
 }
 
 invCont.addClassification = async function (req, res) {
   const { classification_name } = req.body
+  const nav = await utilities.getNav()
   try {
     const result = await invModel.addClassification(classification_name)
     if (result) {
-      req.flash("notice", "Classification added successfully.")
-      const nav = await utilities.getNav()
-      res.redirect("/inv/management")
+      req.flash("message", "Classification added successfully.")
+      res.redirect("/inv/")
     } else {
-      res.render('inventory/add-classification', {
+       req.flash("message", "Failed to add classification.")
+      res.status(500).render("/inv/add-classification", {
         title: "Add Classification",
-        message: "Failed to add classification.",
-        errors: [],
+        nav,
+        errors: null,
       })
     }
   } catch (error) {
-    console.error("❌ Error in addClassification:", error)
-    res.status(500).render("inventory/add-classification", {
+    console.error(error)
+    res.status(500).render("/inv/add-classification", {
       title: "Add Classification",
-      message: "Failed to add classification.",
-      errors: [error.message],
+      nav,
+      errors: null,
     })
   }
 }
+
+invCont.insertClassification = async function (req, res) {
+  const { classification_name } = req.body;
+  try {
+    const result = await invModel.addClassification(classification_name);
+    if (result) {
+      req.flash("message", "Classification added successfully!");
+      res.redirect("/inv/");
+    } else {
+      req.flash("message", "Failed to add classification.");
+      res.redirect("/inv/add-classification");
+    }
+  } catch (error) {
+    console.error("Error adding classification:", error);
+    res.status(500).render("inventory/add-classification", {
+      title: "Add Classification",
+      errors: ["Server error. Try again later."],
+    });
+  }
+};
+
 
 invCont.buildAddInventory = async function (req, res) {
   const classificationList = await utilities.buildClassificationList()
@@ -135,10 +164,10 @@ invCont.addInventory = async function (req, res) {
 
     if (result) {
       req.flash("message", "✅ Vehicle added successfully!")
-      res.redirect("/inv/management")
+      res.redirect("inv/")
     } else {
       const classificationList = await utilities.buildClassificationList(invData.classification_id)
-      res.render("inventory/add-inventory", {
+      res.render("inv/add-inventory", {
         title: "Add Vehicle",
         classificationList,
         message: "❌ Failed to add vehicle.",
@@ -149,7 +178,7 @@ invCont.addInventory = async function (req, res) {
   } catch (error) {
     const classificationList = await utilities.buildClassificationList(invData.classification_id)
     console.error("❌ Error in addInventory:", error)
-    res.status(500).render("inventory/add-inventory", {
+    res.status(500).render("inv/add-inventory", {
       title: "Add Vehicle",
       classificationList,
       message: "❌ Something went wrong while adding the vehicle.",
@@ -159,7 +188,48 @@ invCont.addInventory = async function (req, res) {
   }
 }
 
+invCont.insertInventory = async function (req, res) {
+  const {
+    classification_id,
+    inv_make,
+    inv_model,
+    inv_year,
+    inv_description,
+    inv_image,
+    inv_thumbnail,
+    inv_price,
+    inv_miles,
+    inv_color,
+  } = req.body;
 
+  try {
+    const result = await invModel.addInventory(
+      classification_id,
+      inv_make,
+      inv_model,
+      inv_year,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_miles,
+      inv_color
+    );
 
+    if (result) {
+      req.flash("message", "New inventory item added successfully!");
+      res.redirect("/inv/");
+    } else {
+      req.flash("message", "Failed to add inventory item.");
+      res.redirect("/inv/add-inventory");
+    }
+  } catch (error) {
+    console.error("Error adding inventory:", error);
+    res.status(500).render("inventory/add-inventory", {
+      title: "Add Inventory",
+      errors: ["Server error. Try again later."],
+    });
+  }
+};
 
 module.exports = invCont

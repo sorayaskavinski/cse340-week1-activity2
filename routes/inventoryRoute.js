@@ -17,8 +17,10 @@ router.get("/error", (req, res, next) => {
 })
 
 //ASSIGNMENT UNIT 4
-router.get("/", utilities.handleErrors(invController.buildManagement))
+router.get("/", utilities.handleErrors(invController.getManagementView))
 router.get("/add-classification", invController.buildAddClassification)
-router.post("/inventory/add", validateInventory, invController.addInventory)
+router.get("/add", invController.buildAddInventory)
 
+router.post("/add-inventory", invController.insertInventory)
+router.post("/add-classification", invController.insertClassification)
 module.exports = router
