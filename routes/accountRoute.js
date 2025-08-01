@@ -25,7 +25,7 @@ async function checkRegData(req, res, next){
   next()
 }
 
-async function checkLoginData(req, res, next) {
+/*async function checkLoginData(req, res, next) {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
         let nav = await utilities.getNav()
@@ -42,7 +42,7 @@ async function checkLoginData(req, res, next) {
 /* ROUTES*/
 router.get("/login", utilities.handleErrors(accountController.buildLogin))
 router.get("/register", utilities.handleErrors(accountController.buildRegister))
-router.get("/", utilities.checkJWTToken, handleErrors(accountController.buildAccountManagement))
+router.get("/management", utilities.checkJWTToken, handleErrors(accountController.buildAccountManagement))
 router.get("/logout", utilities.handleErrors(accountController.logout))
 
 /** ROUTER POST */
@@ -50,6 +50,6 @@ router.post("/register", regValidate.registationRules(),
 checkRegData, utilities.handleErrors(accountController.registerAccount))
 
 router.post("/login", regValidate.loginRules(),
-checkLoginData, utilities.handleErrors(accountController.loginAccount))
+regValidate.checkLoginData, utilities.handleErrors(accountController.loginAccount))
 
 module.exports = router

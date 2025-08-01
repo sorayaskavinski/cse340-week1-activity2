@@ -16,7 +16,7 @@ async function buildLogin(req, res) {
 
 async function loginAccount(req, res) {
     let nav = await utilities.getNav()
-    const { account_email, account_password } = req.body
+    const { account_email, account_password } = req.body || {}
 
     const accountData = await accountModel.getAccountByEmail(account_email)
     if (!accountData) {
