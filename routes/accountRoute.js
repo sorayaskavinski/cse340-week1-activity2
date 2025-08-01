@@ -3,7 +3,7 @@ const router =new express.Router()
 const accountController = require("../controllers/accountController")
 const utilities = require("../utilities")
 const regValidate = require("../utilities/account-validation")
-
+const handleErrors = require("../utilities/handle-errors")
 const { validationResult } = require("express-validator")
 
 /* ******************************
@@ -42,6 +42,8 @@ async function checkLoginData(req, res, next) {
 /* ROUTES*/
 router.get("/login", utilities.handleErrors(accountController.buildLogin))
 router.get("/register", utilities.handleErrors(accountController.buildRegister))
+router.get("/", utilities.checkJWTToken, handleErrors(accountController.buildAccountManagement))
+router.get("/logout", utilities.handleErrors(accountController.logout))
 
 /** ROUTER POST */
 router.post("/register", regValidate.registationRules(),

@@ -8,14 +8,16 @@
 const express = require("express")
 const expressLayouts = require('express-ejs-layouts')
 const env = require("dotenv").config()
-const app = express()
 const static = require("./routes/static")
 const baseController = require("./controllers/baseController")
 const inventoryRoute = require("./routes/inventoryRoute")
 const session = require("express-session")
 const pool = require("./database/")
 const bodyParser = require("body-parser")
+const cookieParser = require("cookie-parser")
+const utilities = require("./utilities")
 
+const app = express()
 /* ***********************
  * Middleware
  * ************************/
@@ -32,12 +34,21 @@ const bodyParser = require("body-parser")
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
+
+//UNIT 5 - login activity cookie parser
+app.use(cookieParser())
+
+//UNIT 5, Login Process activity checkJWTTOKEN
+
 // Express Messages Middleware
 app.use(require('connect-flash')())
 app.use(function(req, res, next){
   res.locals.messages = require('express-messages')(req, res)
   next()
 })
+
+//UNI 5 - JWT Middleware
+app.use(utilities.checkJWTToken)
 
 /* ***********************
  * View Engine and Templates

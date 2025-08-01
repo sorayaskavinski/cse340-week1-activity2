@@ -1,6 +1,9 @@
 const utilities = require("../utilities/")
 const accountModel = require("../models/accountModel")
 const bcrypt = require("bcryptjs")
+const jwt = require("jsonwebtoken")
+require("dotenv").config()
+
 
 async function buildLogin(req, res) {
   let nav = await utilities.getNav()
@@ -17,16 +20,39 @@ async function loginAccount(req, res) {
 
     const accountData = await accountModel.getAccountByEmail(account_email)
     if (!accountData) {
-        return res.status(400).render("account/login", {
+      req.flash("notice", "Please check your credentials and try again.")  
+      return res.status(400).render("account/login", {
             title: "Login",
             nav,
-            errors: ["Email not registered."],
+            errors: null,
+            account_email,
         })
+        return
+      }
+    try {
+    if (await bcrypt.compare(account_password, accountData.account_password)) {
+      delete accountData.account_password
+      const accessToken = jwt.sign(accountData, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 3600 * 1000 })
+      if(process.env.NODE_ENV === 'development') {
+        res.cookie("jwt", accessToken, { httpOnly: true, maxAge: 3600 * 1000 })
+      } else {
+        res.cookie("jwt", accessToken, { httpOnly: true, secure: true, maxAge: 3600 * 1000 })
+      }
+      return res.redirect("/account/management")
     }
-    req.flash("notice", `Login successful. Welcome back!, ${accountData.account_firstname}`)
-    res.redirect("/account/dashboard")
+    else {
+      req.flash("message notice", "Please check your credentials and try again.")
+      res.status(400).render("account/login", {
+        title: "Login",
+        nav,
+        errors: null,
+        account_email,
+      })
+    }
+  } catch (error) {
+    throw new Error('Access Forbidden')
+  }
 }
-
 
 async function buildRegister(req, res) {
   let nav = await utilities.getNav()
@@ -91,4 +117,20 @@ async function registerAccount(req, res) {
   }
 }
 
-module.exports = { buildLogin,loginAccount, buildRegister, registerAccount }
+async function buildAccountManagement(req, res) {
+  let nav = await utilities.getNav()
+  const accountData = res.locals.accountData
+  res.render("account/management", {
+    title: "Account Management",
+    nav,
+    errors: [],
+    accountData,
+  })
+  function logout(req, res) {
+  res.clearCookie("jwt")
+  res.redirect("/")
+  }
+}
+
+
+module.exports = { buildLogin,loginAccount, buildRegister, registerAccount, buildAccountManagement}
