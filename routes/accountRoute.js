@@ -42,7 +42,7 @@ async function checkRegData(req, res, next){
 /* ROUTES*/
 router.get("/login", utilities.handleErrors(accountController.buildLogin))
 router.get("/register", utilities.handleErrors(accountController.buildRegister))
-router.get("/management", utilities.checkJWTToken, handleErrors(accountController.buildAccountManagement))
+router.get("/management", utilities.checkJWTToken, utilities.checkLogin, handleErrors(accountController.buildAccountManagement))
 router.get("/logout", utilities.handleErrors(accountController.logout))
 
 /** ROUTER POST */
