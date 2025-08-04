@@ -21,7 +21,14 @@ router.get("/", utilities.handleErrors(invController.getManagementView))
 router.get("/add-classification", utilities.handleErrors(invController.buildAddClassification))
 router.get("/add-inventory",utilities.handleErrors(invController.buildAddInventory))
 
+//ASSIGNMENT UNIT 5 - TEAM ACTIVITY - DELETE ROUTE
+router.get("/delete/:inv_id", utilities.handleErrors(invController.buildDeleteInventory))
+
+//post routes
 router.post("/add-inventory", validateInventory, utilities.handleErrors(invController.addInventory))
 router.post("/add-classification", validateClassification, utilities.handleErrors(invController.addClassification))
+
+//ASSIGNMENT UNIT 5 - TEAM ACTIVTY - POST ROUTE DELETE INVENTORY
+router.post("/delete", utilities.handleErrors(invController.deleteInventory))
 
 module.exports = router

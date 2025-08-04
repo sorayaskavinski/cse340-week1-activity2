@@ -166,4 +166,25 @@ invCont.addInventory = async function (req, res) {
   }
 }
 
+invCont.buildDeleteInventory = async function (req, res, next) {
+  const inv_id = req.params.inv_id
+  try {
+    const vehicleData = await invModel.getInventoryById(inv_id)
+    if (!vehicleData) {
+      req.flash("message", "Vehicle not found.")
+      return res.redirect("/inv/")
+    }
+    let nav = await utilities.getNav()
+    res.render("inventory/delete-inventory", {
+      title: "Delete Vehicle",
+      nav,
+      vehicle: vehicleData,
+      errors: null,
+      message: null
+    })
+  } catch (error) {
+    next(error)
+  }
+}
+
 module.exports = invCont
