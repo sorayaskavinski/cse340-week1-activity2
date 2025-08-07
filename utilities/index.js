@@ -114,4 +114,22 @@ Util.checkLogin = (req, res, next) => {
   return res.redirect("/account/login")
 }
 
+/*UNIT 5 - GET INVENTORY BY CLASSIFICATION*/
+Util.buildInventoryGrid = async function (data) {
+  let grid = '<table class="inventory-grid">'
+  grid += '<thead><tr><th>Make</th><th>Model</th><th>Price</th><th>&nbsp;</th></tr></thead>'
+  grid += '<tbody>'
+  data.forEach(vehicle => {
+    grid += `<tr>
+      <td>${vehicle.inv_make}</td>
+      <td>${vehicle.inv_model}</td>
+      <td>$${vehicle.inv_price.toLocaleString()}</td>
+      <td><a href="/inv/detail/${vehicle.inv_id}">View</a></td>
+    </tr>`
+  })
+  grid += '</tbody></table>'
+  return grid
+}
+
+
 module.exports = Util

@@ -5,6 +5,30 @@
 <h1>Inventory Management</h1>
 
 <div class="inventory-actions">
-    <p><a href="/inv/add-classification">Add New Classification</a></p>
-    <p><a href="/inv/add-inventory">Add New Inventory</a></p>
+  <p><a href="/inv/add-classification">Add New Classification</a></p>
+  <p><a href="/inv/add-inventory">Add New Inventory</a></p>
 </div>
+
+<h2>Manage Inventory</h2>
+<p>Select a classification to see available inventory.</p>
+
+<table id="inventoryDisplay"></table>
+
+<noscript>
+  JavaScript must be enabled to use this page.
+</noscript>
+
+
+<script src="/js/inventory.js"></script>
+
+<form id="classificationForm" method="post" action="/inv/by-classification">
+  <label for="classificationList">Classification:</label>
+  <%- classificationSelect %>
+  <button type="submit">Search</button>
+</form>
+
+<% if (grid) { %>
+  <div class="inventory-grid-wrapper">
+    <%- grid %>
+  </div>
+<% } %>
