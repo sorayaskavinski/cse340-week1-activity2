@@ -54,6 +54,7 @@ async function loginAccount(req, res) {
   }
 }
 
+
 async function buildRegister(req, res) {
   let nav = await utilities.getNav()
   res.render("account/register", {
@@ -126,11 +127,14 @@ async function buildAccountManagement(req, res) {
     errors: [],
     accountData,
   })
-  function logout(req, res) {
-  res.clearCookie("jwt")
+}
+//LOGOUT - UNIT 5 ASSIGNMENT
+function logout(req, res) {
+  res.clearCookie("jwt", {httpOnly: true, secure: true})
+  req.flash("notice", "You have been logged out.")
   res.redirect("/")
-  }
 }
 
 
-module.exports = { buildLogin,loginAccount, buildRegister, registerAccount, buildAccountManagement}
+
+module.exports = { buildLogin,loginAccount, buildRegister, registerAccount, buildAccountManagement, logout }

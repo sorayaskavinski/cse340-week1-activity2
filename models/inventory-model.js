@@ -37,14 +37,12 @@ invModel.getInventoryByClassificationId = async function (classification_id) {
  * ************************** */
 invModel.getInventoryById = async function (inv_id) {
   try {
-    const data = await pool.query(
-      `SELECT * FROM public.inventory WHERE inv_id = $1`,
-      [inv_id]
-    )
-    return data.rows[0]
+     const sql = "SELECT * FROM public.inventory WHERE inv_id = $1"
+    const data = await pool.query(sql, [inv_id])
+    return data.rows[0] // retorna o primeiro registro
   } catch (error) {
-    console.error("getInventoryById error:", error)
-    return null
+    console.error("getInventoryById error", error)
+    throw error
   }
 }
 
@@ -90,6 +88,91 @@ invModel.addInventory = async function (invData) {
     return result.rowCount
   } catch (error) {
     console.error("Error adding inventory item:", error)
+    return null
+  }
+}
+
+/* ***************************
+ *  DELETE inventory item
+ * ************************** */
+invModel.deleteInventory = async function (inv_id) {
+   try {
+    const sql = "DELETE FROM public.inventory WHERE inv_id = $1"
+    const data = await pool.query(sql, [inv_id])
+    return data.rowCount // retorna o número de linhas afetadas
+  } catch (error) {
+    console.error("deleteInventory error", error)
+    throw error
+  }
+}
+
+/* ***************************
+ *  Get all inventory items
+ * ************************** */
+invModel.getAllInventory = async function () {
+  try {
+    const sql = `
+      SELECT inv_id, inv_make, inv_model, classification_name
+      FROM public.inventory
+      JOIN public.classification
+      ON inventory.classification_id = classification.classification_id
+      ORDER BY inv_id
+    `
+    const data = await pool.query(sql)
+    return data.rows
+  } catch (error) {
+    console.error("getAllInventory error", error)
+    throw error
+  }
+}
+
+/*  UPDATE INVENTORY*/
+invModel.updateInventory = async function (
+  inv_id,
+  inv_make,
+  inv_model,
+  inv_description,
+  inv_image,
+  inv_thumbnail,
+  inv_price,
+  inv_year,
+  inv_miles,
+  inv_color,
+  classification_id
+) {
+  try {
+    const sql = `
+      UPDATE public.inventory
+      SET
+        inv_make = $1,
+        inv_model = $2,
+        inv_description = $3,
+        inv_image = $4,
+        inv_thumbnail = $5,
+        inv_price = $6,
+        inv_year = $7,
+        inv_miles = $8,
+        inv_color = $9,
+        classification_id = $10
+      WHERE inv_id = $11
+      RETURNING *;
+    `
+    const data = await pool.query(sql, [
+      inv_make,
+      inv_model,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_year,
+      inv_miles,
+      inv_color,
+      classification_id,
+      inv_id
+    ])
+    return data.rows[0]
+  } catch (error) {
+    console.error("Erro no updateInventory:", error)
     return null
   }
 }

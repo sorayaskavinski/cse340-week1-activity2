@@ -315,7 +315,7 @@ footer {
 }
 
 /*Unit 4 My account - Registration */
-.form-card, .register-card {
+.form-card, .register-card  {
   max-width: 400px;
   margin: 2rem auto;
   padding: 2rem;
@@ -446,7 +446,147 @@ footer {
   font-weight: bold;
 }
 
+.delete-container {
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 20px;
+  border: 2px solid #ff4d4d;
+  border-radius: 8px;
+  background-color: #fff5f5;
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
 
+.delete-container h1 {
+  color: #cc0000;
+  margin-bottom: 20px;
+}
+
+.delete-container p {
+  margin-bottom: 20px;
+  font-size: 16px;
+  color: #333;
+}
+
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  margin: 5px;
+  text-decoration: none;
+}
+
+.btn-danger {
+  background-color: #cc0000;
+  color: white;
+}
+
+.btn-danger:hover {
+  background-color: #a30000;
+}
+
+.btn-secondary {
+  background-color: #ccc;
+  color: black;
+}
+
+.btn-secondary:hover {
+  background-color: #999;
+}
+
+/*EDIT INVENTORY PAGE*/
+/* ===== Inventory Form Styles ===== */
+
+.inventory-form-container {
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 25px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.inventory-form-container h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+  color: #333;
+}
+
+.inventory-form-container label {
+  display: block;
+  font-weight: 600;
+  margin-top: 15px;
+  color: #444;
+}
+
+.inventory-form-container input,
+.inventory-form-container textarea,
+.inventory-form-container select {
+  width: 100%;
+  padding: 10px 12px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  background-color: #fdfdfd;
+  transition: border 0.3s ease;
+}
+
+.inventory-form-container input:focus,
+.inventory-form-container textarea:focus,
+.inventory-form-container select:focus {
+  border-color: #0077cc;
+  outline: none;
+}
+
+.inventory-form-container textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.inventory-form-container button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 20px;
+  background-color: #0077cc;
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.inventory-form-container button:hover {
+  background-color: #005fa3;
+}
+
+/* UNIT 5 ASSIGNMENT - LOGOUT VIEW*/
+.link-management {
+  color: var(--button-color);
+  text-decoration: none;
+  font-weight: bold;
+  padding-right: 20px;
+}
+
+.link-logout {
+  color: red;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.link-management:hover {
+  text-decoration: underline;
+}
+
+.link-logout:hover {
+  text-decoration: underline;
+}
 
 /* Desktop and large screens */
 @media screen and (min-width: 768px) {

@@ -1,0 +1,39 @@
+<div class="delete-container">
+  <h1><%= title %></h1>
+  <p>
+    Are you sure you want to delete 
+    <strong><%= inv_make %> <%= inv_model %></strong> (<%= inv_year %>)?
+  </p>
+
+  <form method="post" action="/inv/delete">
+    <input type="hidden" name="inv_id" value="<%= inv_id %>">
+    <button type="submit" class="btn btn-danger">Yes, Delete</button>
+    <a href="/inv" class="btn btn-secondary">Cancel</a>
+  </form>
+
+  <hr>
+
+  <!-- Botão AJAX -->
+  <button id="ajaxDeleteBtn" class="btn btn-danger">Delete via AJAX</button>
+</div>
+
+<script>
+  document.getElementById('ajaxDeleteBtn').addEventListener('click', function() {
+    if (!confirm("Are you sure you want to delete this vehicle?")) return;
+
+    fetch(`/inv/delete/<%= inv_id %>`, { method: 'DELETE' })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          alert('Vehicle deleted successfully (AJAX)');
+          window.location.href = '/inv';
+        } else {
+          alert('Failed to delete vehicle');
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        alert('Error deleting vehicle');
+      });
+  });
+</script>
