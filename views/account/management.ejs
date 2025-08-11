@@ -1,5 +1,17 @@
 <h1><%= title %></h1>
-<p> Welcome, <%= accountData.account_firstname %> <%= accountData.account_lastname%>!</p>
+<h2>Welcome, <%= accountData.account_firstname %> <%= accountData.account_lastname %>!</h2>
+
+<div class="accountLink">
+  <p><a href="/account/update/<%= accountId %>">Update Account Information</a></p>
+</div>
+
+<% if (accountType === "Employee" || accountType === "Admin") { %>
+  <h3>Inventory Management</h3>
+  <div class="accountLink">
+    <p><a href="/inv/">Manage Inventory</a></p>
+  </div>
+<% } %>
+
 <% if (Array.isArray(errors) && errors.length > 0) { %>
   <div class="error-messages">
     <ul>
@@ -10,8 +22,7 @@
   </div>
 <% } %>
 
-
 <% if (typeof message !== 'undefined') { %>
   <div class="flash-message"><%= message %></div> 
-  <p>You're logged in! </p>
-  <% } %>
+  <p>You're logged in!</p>
+<% } %>

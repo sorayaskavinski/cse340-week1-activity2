@@ -105,14 +105,38 @@ Util.checkJWTToken = (req, res, next) => {
   next()
 }
 
-/* Middleware de proteção */
+/* Middleware of protection */
 Util.checkLogin = (req, res, next) => {
-  if (res.locals.loggedin) {
-    return next()
+  if (res.locals.accountData) {
+    next()
+  } else {
+    req.flash("error", "Please log in.")
+    return res.status(403).render("account/login", {
+      title: "Login",
+      nav: res.locals.nav,
+      errors: [],
+    })
   }
-  req.flash("notice", "Please log in.")
-  return res.redirect("/account/login")
 }
+
+/**UNIT 5- ASSIGNMENT TASK 2 MIDDLEWARE TO VERIFY TYPE OF ACCOUNT */
+Util.checkAccountType = (req, res, next) => {
+  const accountData = res.locals.accountData
+  if (
+    !accountData ||
+    (accountData.account_type !== "Employee" && accountData.account_type !== "Admin")
+  ) {
+  req.flash("error", "You do not have permission to access that page.")
+    return res.status(403).render("account/login", {
+      title: "Login",
+      nav: res.locals.nav,
+      errors: [],
+    })
+  }
+
+  next()
+}  
+
 
 /*UNIT 5 - GET INVENTORY BY CLASSIFICATION*/
 Util.buildInventoryGrid = async function (data) {

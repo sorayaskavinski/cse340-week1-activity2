@@ -118,4 +118,75 @@ validate.checkLoginData = async (req, res, next) => {
   }
   next()
 }
+
+/**********************************
+  *  UPDATE ACCOUNT RULES - UNIT 5 TASK 3
+  * ********************************* */
+validate.updateAccountRules = () => {
+  return [
+    body("account_firstname").trim().isLength({ min: 1 }).withMessage("First name is required."),
+    body("account_lastname").trim().isLength({ min: 1 }).withMessage("Last name is required."),
+    body("account_email")
+      .trim()
+      .isEmail()
+      .withMessage("Valid email is required.")
+      .normalizeEmail()
+  ]
+}
+
+validate.checkUpdateAccountData = async (req, res, next) => {
+  const { account_id, account_firstname, account_lastname, account_email } = req.body
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    const nav = await utilities.getNav()
+    res.render("account/update", {
+      title: "Update Account",
+      nav,
+      errors: errors.array(),
+      account_id,
+      account_firstname,
+      account_lastname,
+      account_email
+    })
+    return
+  }
+  next()
+}
+/*UPDATE PASSWORD RULES - UNIT 5 TASK 3*/
+validate.updatePasswordRules = () => {
+  return [
+    body("account_password")
+      .isStrongPassword({
+        minLength: 12,
+        minLowercase: 1,
+        minUppercase: 1,
+        minNumbers: 1,
+        minSymbols: 1
+      })
+      .withMessage(
+        "Password must be at least 12 characters long and contain uppercase, lowercase, number, and special character."
+      )
+  ]
+}
+
+validate.checkUpdatePasswordData = async (req, res, next) => {
+  const { account_id } = req.body
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    const nav = await utilities.getNav()
+    const accountData = await require("../models/account-model").getAccountById(account_id)
+    res.render("account/update", {
+      title: "Update Account",
+      nav,
+      errors: errors.array(),
+      account_id,
+      account_firstname: accountData.account_firstname,
+      account_lastname: accountData.account_lastname,
+      account_email: accountData.account_email
+    })
+    return
+  }
+  next()
+}
+
 module.exports = validate

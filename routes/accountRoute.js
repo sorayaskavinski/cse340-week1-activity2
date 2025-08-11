@@ -42,14 +42,17 @@ async function checkRegData(req, res, next){
 /* ROUTES*/
 router.get("/login", utilities.handleErrors(accountController.buildLogin))
 router.get("/register", utilities.handleErrors(accountController.buildRegister))
-router.get("/management", utilities.checkJWTToken, utilities.checkLogin, handleErrors(accountController.buildAccountManagement))
+router.get("/management", utilities.checkJWTToken, utilities.checkLogin, utilities.checkAccountType, handleErrors(accountController.buildAccountManagement))
 router.get("/logout", utilities.handleErrors(accountController.logout))
 
-/** ROUTER POST */
-router.post("/register", regValidate.registationRules(),
-checkRegData, utilities.handleErrors(accountController.registerAccount))
+/*UNIT 5 TASK 3 - update ACCOUNT INFORMATION*/
+router.get("/update/:account_id", utilities.checkJWTToken, utilities.checkLogin, utilities.handleErrors(accountController.buildUpdateAccount))
 
-router.post("/login", regValidate.loginRules(),
-regValidate.checkLoginData, utilities.handleErrors(accountController.loginAccount))
+
+/** ROUTER POST */
+router.post("/register", regValidate.registationRules(), checkRegData, utilities.handleErrors(accountController.registerAccount))
+router.post("/login", regValidate.loginRules(), regValidate.checkLoginData, utilities.handleErrors(accountController.loginAccount))
+router.post("/update-info",regValidate.updateAccountRules(), regValidate.checkUpdateAccountData, utilities.handleErrors(accountController.updateAccountInfo))
+router.post("/update-password", regValidate.updatePasswordRules(), regValidate.checkUpdatePasswordData, utilities.handleErrors(accountController.updateAccountPassword))
 
 module.exports = router

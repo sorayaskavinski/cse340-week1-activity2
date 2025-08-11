@@ -1,0 +1,31 @@
+<!-- FORM 1: Account Update -->
+<h2>Update Account Information</h2>
+<form class="update-form" action="/account/update-info" method="post">
+  <input type="hidden" name="account_id" value="<%= accountData.account_id %>">
+  
+  <label for="account_firstname">First Name</label>
+  <input type="text" id="account_firstname" name="account_firstname" required
+         value="<%= typeof account_firstname !== 'undefined' ? account_firstname : accountData.account_firstname %>">
+
+  <label for="account_lastname">Last Name</label>
+  <input type="text" id="account_lastname" name="account_lastname" required
+         value="<%= typeof account_lastname !== 'undefined' ? account_lastname : accountData.account_lastname %>">
+
+  <label for="account_email">Email</label>
+  <input type="email" id="account_email" name="account_email" required
+         value="<%= typeof account_email !== 'undefined' ? account_email : accountData.account_email %>">
+
+  <button type="submit">Update Account</button>
+</form>
+
+<!-- FORM 2: Change Password -->
+<h2>Change Password</h2>
+<p>Enter a new password below. Password must be at least 8 characters and contain 1 uppercase, 1 number, and 1 special character.</p>
+<form class="update-form" action="/account/update-password" method="post">
+  <input type="hidden" name="account_id" value="<%= accountData.account_id %>">
+  
+  <label for="account_password">New Password</label>
+  <input type="password" id="account_password" name="account_password" required>
+
+  <button type="submit">Change Password</button>
+</form>
