@@ -130,7 +130,7 @@ async function buildAccountManagement(req, res) {
     accountType: accountData.account_type,
   })
 }
-//LOGOUT - UNIT 5 ASSIGNMENT
+//LOGOUT - UNIT 5 ASSIGNMENT -- task 6
 function logout(req, res) {
   res.clearCookie("jwt", {httpOnly: true, secure: true})
   req.flash("notice", "You have been logged out.")
