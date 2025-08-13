@@ -17,6 +17,9 @@ const bodyParser = require("body-parser")
 const cookieParser = require("cookie-parser")
 const utilities = require("./utilities")
 
+/***UNIT 6 - SORAYA SKAVINSKI PURCHASE BUTTON */
+const purchaseRoute = require("./routes/purchaseRoute")
+
 const app = express()
 /* ***********************
  * Middleware
@@ -49,6 +52,10 @@ app.use(function(req, res, next){
 
 //UNI 5 - JWT Middleware
 app.use(utilities.checkJWTToken)
+
+/**UNIT 6 - SORAYA SKAVINSKI - PURCHASE BUTTON */
+app.use("/purchase", purchaseRoute)
+
 
 /* ***********************
  * View Engine and Templates

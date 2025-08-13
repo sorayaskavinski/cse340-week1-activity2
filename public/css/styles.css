@@ -640,6 +640,56 @@ footer {
   text-decoration: underline;
 }
 
+/* UNIT 6 -SORAYA SKAVINSKI - PURCHASE BUTTON
+- MY PURCHASES VIEW */
+.purchases-table {
+  width: 90%;
+  margin: 20px auto;
+  border-collapse: collapse;
+  font-size: 16px;
+}
+
+.purchases-table th,
+.purchases-table td {
+  border: 1px solid #ccc;
+  padding: 8px 12px;
+  text-align: center;
+}
+
+.purchases-table th {
+  background-color: #f8f8f8;
+  font-weight: bold;
+}
+
+.purchases-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.alert-warning {
+  background-color: #fff3cd;
+  color: #4b3904;
+  border: 1px solid #ffeeba;
+}
+
+/* ====== BUTTON BUY ====== */
+.buy-btn {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.buy-btn:hover {
+  background-color: #0056b3;
+}
+
+
+
 /* Desktop and large screens */
 @media screen and (min-width: 768px) {
   .nav {

@@ -36,10 +36,11 @@ invCont.buildByClassificationId = async function (req, res) {
 
 // Build vehicle detail view
 invCont.buildVehicleDetail = async function (req, res) {
+  let nav
   try {
     const inv_id = req.params.inv_id
     const vehicleData = await invModel.getInventoryById(inv_id)
-    const nav = await utilities.getNav()
+    nav = await utilities.getNav()
     
     if (!vehicleData) {
       return res.status(404).render("errors/404", {
@@ -56,13 +57,14 @@ invCont.buildVehicleDetail = async function (req, res) {
       title: `${vehicleData.inv_make} ${vehicleData.inv_model}`,
       nav,
       view,
-    })
-  } catch (error) {
+      vehicle: vehicleData      
+  }) 
+} catch (error) {
     console.error("❌ Error in buildVehicleDetail:", error)
     res.status(500).render("errors/500", {
       title: "Server Error",
       message: error.message,
-      nav,
+      nav: nav || ""
     })
   }
 }
@@ -70,6 +72,7 @@ invCont.buildVehicleDetail = async function (req, res) {
 /** Management View witha ALL vehicles */
 
 invCont.getManagementView = async function (req, res) {
+ 
   try{
     const nav = await utilities.getNav()
 

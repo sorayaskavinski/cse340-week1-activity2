@@ -7,3 +7,11 @@
 <div>
   <%- view %>
 </div>
+
+<!-- UNIT 6 SORAYA SKAVINSKI PURCHASE BUTTON -->
+
+<% if (locals.accountData && locals.accountData.account_type === "Client") { %>
+  <form action="/purchase/buy/<%= vehicle.inv_id %>" method="POST">
+    <button type="submit" class="buy-btn">Buy</button>
+  </form>
+<% } %>

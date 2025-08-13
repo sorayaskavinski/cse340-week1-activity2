@@ -1,0 +1,32 @@
+<!-- UNIT 6 SORAYA SKAVINSKI PURCHASE BUTTON -->
+
+
+<%- include("../partials/header") %>
+<h1>My Purchases</h1>
+
+<% if (purchases.length > 0) { %>
+  <table class="purchases-table">
+    <thead>
+      <tr>
+        <th>Vehicle</th>
+        <th>Price</th>
+        <th>Purchase Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% purchases.forEach(p => { %>
+        <tr>
+          <td><%= p.inv_make %> <%= p.inv_model %></td>
+          <td>$<%= p.inv_price %></td>
+          <td><%= p.purchase_date.toLocaleString() %></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+<% } else { %>
+ <div class="alert alert-warning">You have not purchased any vehicles yet.</div>
+<% } %>
+
+<%- include("../partials/footer") %>
+
+
