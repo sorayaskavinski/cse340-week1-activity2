@@ -1,10 +1,8 @@
 <!-- UNIT 6 SORAYA SKAVINSKI PURCHASE BUTTON -->
-<!DOCTYPE html>
 <html lang="en">
-<%- include('../partials/head') %>
+<link rel="stylesheet" href="/css/purchase.css">
 
 <body>
-    <%- include('../partials/header') %>
     <%- include('../partials/navigation') %>
 
     <main>
@@ -12,7 +10,7 @@
       <h2>Welcome, <%= accountData.account_firstname %> <%= accountData.account_lastname %>!</h2>
 
       <div class="accountLink">
-        <p><a href="/account/management">Back to Account Management</a></p>
+        <p><a href="/">Back to Main</a></p>
       </div>
 
       <% if (Array.isArray(errors) && errors.length > 0) { %>
