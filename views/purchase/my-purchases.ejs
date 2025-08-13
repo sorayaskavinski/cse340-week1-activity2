@@ -1,32 +1,62 @@
 <!-- UNIT 6 SORAYA SKAVINSKI PURCHASE BUTTON -->
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../partials/head') %>
 
+<body>
+    <%- include('../partials/header') %>
+    <%- include('../partials/navigation') %>
 
-<%- include("../partials/header") %>
-<h1>My Purchases</h1>
+    <main>
+      <h1><%= title %></h1>
+      <h2>Welcome, <%= accountData.account_firstname %> <%= accountData.account_lastname %>!</h2>
 
-<% if (purchases.length > 0) { %>
-  <table class="purchases-table">
-    <thead>
-      <tr>
-        <th>Vehicle</th>
-        <th>Price</th>
-        <th>Purchase Date</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% purchases.forEach(p => { %>
-        <tr>
-          <td><%= p.inv_make %> <%= p.inv_model %></td>
-          <td>$<%= p.inv_price %></td>
-          <td><%= p.purchase_date.toLocaleString() %></td>
-        </tr>
-      <% }) %>
-    </tbody>
-  </table>
-<% } else { %>
- <div class="alert alert-warning">You have not purchased any vehicles yet.</div>
-<% } %>
+      <div class="accountLink">
+        <p><a href="/account/management">Back to Account Management</a></p>
+      </div>
 
-<%- include("../partials/footer") %>
+      <% if (Array.isArray(errors) && errors.length > 0) { %>
+        <div class="error-messages">
+          <ul>
+            <% errors.forEach(function(error) { %>
+              <li><%= error.msg || error %></li>
+            <% }) %>
+          </ul>
+        </div>
+      <% } %>
 
+      <% if (typeof message !== 'undefined') { %>
+        <div class="flash-message"><%= message %></div>
+      <% } %>
 
+      <% if (purchases && purchases.length > 0) { %>
+        <h3>My Purchased Vehicles</h3>
+        <table class="purchase-table">
+          <thead>
+            <tr>
+              <th>Purchase Date</th>
+              <th>Make</th>
+              <th>Model</th>
+              <th>Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% purchases.forEach(function(purchase) { %>
+              <tr>
+                <td><%= new Date(purchase.purchase_date).toLocaleDateString() %></td>
+                <td><%= purchase.inv_make %></td>
+                <td><%= purchase.inv_model %></td>
+                <td>$<%= purchase.inv_price.toLocaleString() %></td>
+              </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        <% } else { %>
+          <p>You have no purchases yet.</p>
+        <% } %>
+
+      </main>
+
+      <%- include("../partials/footer") %>
+</body>
+</html>

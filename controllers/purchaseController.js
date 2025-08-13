@@ -26,6 +26,8 @@ async function showMyPurchases(req, res) {
     res.render("purchase/my-purchases", {
       title: "My Purchases",
       purchases,
+      errors: [],
+      message: req.flash("message"),
       accountData: res.locals.accountData,
       year: new Date().getFullYear(),
     });

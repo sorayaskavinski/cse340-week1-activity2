@@ -642,33 +642,75 @@ footer {
 
 /* UNIT 6 -SORAYA SKAVINSKI - PURCHASE BUTTON
 - MY PURCHASES VIEW */
-.purchases-table {
-  width: 90%;
-  margin: 20px auto;
+/* --- Purchase Table Styles --- */
+.purchase-table {
+  width: 100%;
   border-collapse: collapse;
-  font-size: 16px;
+  margin-top: 1.5rem;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  border-radius: 6px;
+  overflow: hidden;
 }
 
-.purchases-table th,
-.purchases-table td {
-  border: 1px solid #ccc;
-  padding: 8px 12px;
-  text-align: center;
+.purchase-table th,
+.purchase-table td {
+  padding: 0.75rem 1rem;
+  text-align: left;
 }
 
-.purchases-table th {
-  background-color: #f8f8f8;
+.purchase-table th {
+  background-color: #f4f4f4;
   font-weight: bold;
+  border-bottom: 2px solid #ddd;
 }
 
-.purchases-table tr:nth-child(even) {
-  background-color: #f2f2f2;
+.purchase-table tr:nth-child(even) {
+  background-color: #fafafa;
 }
 
-.alert-warning {
-  background-color: #fff3cd;
-  color: #4b3904;
-  border: 1px solid #ffeeba;
+.purchase-table tr:hover {
+  background-color: #f1f1f1;
+}
+
+.purchase-table td {
+  border-bottom: 1px solid #eee;
+}
+
+/* Flash message style */
+.flash-message {
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  background-color: #e6ffed;
+  color: #2d7a2d;
+  border: 1px solid #b7e2c1;
+  border-radius: 4px;
+}
+
+/* Error message style */
+.error-messages {
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  background-color: #ffe6e6;
+  color: #b32d2d;
+  border: 1px solid #e2b7b7;
+  border-radius: 4px;
+}
+
+/* Link buttons inside accountLink */
+.accountLink a {
+  display: inline-block;
+  margin-top: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: #0073e6;
+  color: #fff;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.accountLink a:hover {
+  background-color: #005bb5;
 }
 
 /* ====== BUTTON BUY ====== */
